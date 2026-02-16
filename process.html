@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manufacturing Process | QR Packages</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { brandNavy: '#0a192f', brandGold: '#FFC107', brandDark: '#020c1b' },
+                    fontFamily: { sans: ['Outfit', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 text-gray-800">
+
+    <nav class="fixed w-full z-50 bg-brandNavy text-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2 font-bold text-2xl">
+                <img src="images\logo.jpeg" alt="Logo" class="h-10 bg-white rounded-full"> QR<span class="text-brandGold">PACKAGES</span>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="hover:text-brandGold transition">Home</a>
+                <a href="process.html" class="text-brandGold border-b-2 border-brandGold">Manufacturing</a>
+                <a href="contact.html" class="hover:text-brandGold transition">Contact & Export</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="pt-32 pb-12 bg-brandDark text-center text-white relative overflow-hidden">
+        <h1 class="text-4xl md:text-6xl font-bold mb-4">Our Manufacturing <span class="text-brandGold">Standard</span></h1>
+        <p class="text-gray-400 max-w-2xl mx-auto">We follow a rigorous 6-step industrial process to ensure every cup is leak-proof, food-safe, and export-quality.</p>
+    </header>
+
+    <section class="py-16 max-w-5xl mx-auto px-4 relative">
+        <div class="absolute left-4 md:left-1/2 h-full w-1 bg-gray-200 transform -translate-x-1/2 hidden md:block"></div>
+
+        <div class="relative z-10 mb-16 md:flex justify-between items-center w-full">
+            <div class="md:w-5/12 text-right order-1 pr-8">
+                <h3 class="text-2xl font-bold text-brandNavy">1. Raw Material Sourcing</h3>
+                <p class="text-gray-600 mt-2">We source premium food-grade paperboard coated with PE (Polyethylene) to ensure water resistance and safety.</p>
+            </div>
+            <div class="w-12 h-12 bg-brandGold rounded-full border-4 border-white shadow-xl flex items-center justify-center text-brandNavy font-bold text-xl order-2 z-20 mx-auto md:mx-0 my-4 md:my-0">1</div>
+            <div class="md:w-5/12 order-3 pl-8">
+                
+                <img src="images\raw material.avif" class="rounded-lg shadow-lg w-full" alt="Raw Material">
+            </div>
+        </div>
+
+        <div class="relative z-10 mb-16 md:flex justify-between items-center w-full">
+            <div class="md:w-5/12 order-3 pl-8">
+                <h3 class="text-2xl font-bold text-brandNavy">2. Precision Printing</h3>
+                <p class="text-gray-600 mt-2">Using Flexographic printing, we apply your brand logo and designs with food-safe ink before the paper is cut.</p>
+            </div>
+            <div class="w-12 h-12 bg-brandNavy text-white rounded-full border-4 border-white shadow-xl flex items-center justify-center font-bold text-xl order-2 z-20 mx-auto md:mx-0 my-4 md:my-0">2</div>
+            <div class="md:w-5/12 text-right order-1 pr-8">
+                
+                <img src="images\Printing.jpg" class="rounded-lg shadow-lg w-full" alt="Printing">
+            </div>
+        </div>
+
+        <div class="relative z-10 mb-16 md:flex justify-between items-center w-full">
+            <div class="md:w-5/12 text-right order-1 pr-8">
+                <h3 class="text-2xl font-bold text-brandNavy">3. Die Cutting</h3>
+                <p class="text-gray-600 mt-2">The printed rolls are punched into "fan" shapes (sidewalls) and circular bottoms with extreme precision.</p>
+            </div>
+            <div class="w-12 h-12 bg-brandGold rounded-full border-4 border-white shadow-xl flex items-center justify-center text-brandNavy font-bold text-xl order-2 z-20 mx-auto md:mx-0 my-4 md:my-0">3</div>
+            <div class="md:w-5/12 order-3 pl-8">
+                
+                <img src="images\Die Cutting.jpg" class="rounded-lg shadow-lg w-full" alt="Die Cutting">
+            </div>
+        </div>
+
+        <div class="relative z-10 mb-16 md:flex justify-between items-center w-full">
+            <div class="md:w-5/12 order-3 pl-8">
+                <h3 class="text-2xl font-bold text-brandNavy">4. High-Speed Forming</h3>
+                <p class="text-gray-600 mt-2">Our machines fold the fans into cylinders and heat-seal the bottoms to prevent any leakage.</p>
+            </div>
+            <div class="w-12 h-12 bg-brandNavy text-white rounded-full border-4 border-white shadow-xl flex items-center justify-center font-bold text-xl order-2 z-20 mx-auto md:mx-0 my-4 md:my-0">4</div>
+            <div class="md:w-5/12 text-right order-1 pr-8">
+                
+                <img src="images\High-Speed Forming.jpg" class="rounded-lg shadow-lg w-full object-cover h-48" alt="Cup Forming">
+            </div>
+        </div>
+
+         <div class="relative z-10 mb-16 md:flex justify-between items-center w-full">
+            <div class="md:w-5/12 text-right order-1 pr-8">
+                <h3 class="text-2xl font-bold text-brandNavy">5. Quality Control</h3>
+                <p class="text-gray-600 mt-2">Every batch undergoes leak testing and visual inspection to meet international export standards.</p>
+            </div>
+            <div class="w-12 h-12 bg-brandGold rounded-full border-4 border-white shadow-xl flex items-center justify-center text-brandNavy font-bold text-xl order-2 z-20 mx-auto md:mx-0 my-4 md:my-0">5</div>
+            <div class="md:w-5/12 order-3 pl-8">
+                
+                <img src="images\Quality Control.jpg" class="rounded-lg shadow-lg w-full" alt="QC Check">
+            </div>
+        </div>
+
+    </section>
+
+    <section class="bg-brandNavy text-white py-16 text-center">
+        <h2 class="text-3xl font-bold mb-6">See Us In Action</h2>
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="aspect-w-16 aspect-h-9 bg-gray-800 rounded-xl flex items-center justify-center border-2 border-brandGold">
+                <p class="text-xl p-10"><i class="fas fa-play-circle text-6xl mb-4 block text-brandGold"></i> Video coming soon...</p>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | QR Packages</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { brandNavy: '#0a192f', brandGold: '#FFC107', brandDark: '#020c1b' },
+                    fontFamily: { sans: ['Outfit', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 text-brandNavy font-sans flex flex-col min-h-screen">
+
+    <nav class="sticky top-0 z-50 bg-brandNavy text-white shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-3">
+                <img src="images/logo.jpeg" alt="QR Logo" class="h-12 bg-white rounded-lg p-1">
+                <div class="leading-tight hidden md:block">
+                    <h1 class="font-extrabold text-xl tracking-widest">QR PACKAGES</h1>
+                    <p class="text-[10px] text-brandGold uppercase">By QR Group</p>
+                </div>
+            </a>
+            <div class="hidden md:flex items-center space-x-8 text-sm font-semibold tracking-wide">
+                <a href="index.html" class="hover:text-brandGold transition">HOME</a>
+                <a href="shop.html" class="hover:text-brandGold transition">SHOP PRODUCTS</a>
+            </div>
+            <div id="auth-links" class="flex gap-4 text-sm font-bold">
+                <!-- Auth links injected by main.js -->
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow flex items-center justify-center py-20 px-4">
+        <div class="bg-white p-8 rounded-xl shadow-2xl w-full max-w-md border border-gray-100">
+            <h2 class="text-3xl font-bold text-center mb-6 text-brandNavy">Create Account</h2>
+            <form onsubmit="registerUser(event)" class="space-y-6">
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2">Full Name</label>
+                    <input type="text" id="username" required
+                        class="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-brandGold focus:border-transparent outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2">Email Address</label>
+                    <input type="email" id="email" required
+                        class="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-brandGold focus:border-transparent outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-gray-700 font-bold mb-2">Password</label>
+                    <input type="password" id="password" required
+                        class="w-full px-4 py-3 rounded-lg border focus:ring-2 focus:ring-brandGold focus:border-transparent outline-none transition">
+                </div>
+                <button type="submit"
+                    class="w-full bg-brandNavy text-white font-bold py-3 rounded-lg hover:bg-brandDark transition transform hover:scale-[1.02]">
+                    Register Now
+                </button>
+            </form>
+            <p class="mt-6 text-center text-gray-600">
+                Already have an account? <a href="login.html" class="text-brandGold font-bold hover:underline">Login
+                    here</a>
+            </p>
+        </div>
+    </main>
+
+    <footer class="bg-brandDark text-gray-400 py-8 border-t border-gray-800 text-center">
+        <p>&copy; 2025 QR Packages. All rights reserved.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

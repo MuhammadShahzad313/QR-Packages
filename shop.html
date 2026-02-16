@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Products | QR Packages</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { brandNavy: '#0a192f', brandGold: '#FFC107', brandDark: '#020c1b' }, fontFamily: { sans: ['Outfit', 'sans-serif'] } } }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 text-brandNavy font-sans">
+
+    <nav class="sticky top-0 z-50 bg-brandNavy text-white shadow-xl">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <img src="images\logo.jpeg" class="h-10 bg-white rounded p-1">
+                <span class="font-bold text-lg hidden sm:block">QR PACKAGES</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="hover:text-brandGold text-sm">Home</a>
+                <button onclick="toggleCart()"
+                    class="bg-brandGold text-brandNavy px-4 py-2 rounded font-bold flex items-center gap-2">
+                    <i class="fas fa-shopping-cart"></i> <span id="cart-total">0</span> Items
+                </button>
+            </div>
+            <div id="auth-links" class="flex items-center gap-4 text-sm font-bold ml-4">
+                <!-- Auth links injected by main.js -->
+            </div>
+        </div>
+    </nav>
+
+    <div class="flex flex-col md:flex-row min-h-screen max-w-7xl mx-auto pt-8">
+
+        <aside class="w-full md:w-1/4 px-4 mb-8">
+            <div class="bg-white p-6 rounded-xl shadow-lg sticky top-24">
+                <h3 class="font-bold text-xl mb-6 border-b pb-2">Categories</h3>
+                <ul class="space-y-3 text-gray-600" id="category-list">
+                    <li class="hover:text-brandGold cursor-pointer font-medium" data-category="All">All Products</li>
+                    <li class="hover:text-brandGold cursor-pointer font-medium" data-category="Hot">Hot Coffee Cups</li>
+                    <li class="hover:text-brandGold cursor-pointer font-medium" data-category="Cold">Cold/Juice Cups
+                    </li>
+                    <li class="hover:text-brandGold cursor-pointer font-medium" data-category="Food">Food & Boxes</li>
+                    <li class="hover:text-brandGold cursor-pointer font-medium" data-category="Snack">Popcorn Boxes</li>
+                    <li class="hover:text-brandGold cursor-pointer font-medium" data-category="Cutlery">Cutlery & Straws
+                    </li>
+                    <li class="hover:text-brandGold cursor-pointer font-medium" data-category="Lids">Cup Lids</li>
+
+                </ul>
+
+                <div class="mt-8 bg-brandNavy text-white p-4 rounded-lg text-center">
+                    <p class="text-sm mb-2">Need Custom Printing?</p>
+                    <a href="contact.html" class="text-brandGold font-bold text-sm underline">Contact Support</a>
+                </div>
+            </div>
+        </aside>
+
+        <main class="w-full md:w-3/4 px-4 pb-20">
+            <h1 class="text-3xl font-bold mb-2">Product Catalog</h1>
+            <p class="text-gray-500 mb-8">Select items to build your wholesale inquiry.</p>
+
+            <!-- Search and Category Filter -->
+            <div class="flex flex-col sm:flex-row justify-between mb-6 gap-4">
+                <input id="search-input" type="text" placeholder="Search products..."
+                    class="border border-gray-300 rounded px-4 py-2 flex-1 focus:outline-none focus:ring-2 focus:ring-brandGold">
+                <div class="flex flex-wrap gap-2">
+                    <button class="category-btn bg-brandGold text-white px-3 py-1 rounded"
+                        data-category="All">All</button>
+                    <button class="category-btn bg-gray-200 text-gray-700 px-3 py-1 rounded" data-category="Hot">Hot
+                        Coffee Cups</button>
+                    <button class="category-btn bg-gray-200 text-gray-700 px-3 py-1 rounded"
+                        data-category="Cold">Cold/Juice Cups</button>
+                    <button class="category-btn bg-gray-200 text-gray-700 px-3 py-1 rounded" data-category="Food">Food &
+                        Boxes</button>
+                    <button class="category-btn bg-gray-200 text-gray-700 px-3 py-1 rounded"
+                        data-category="Snack">Popcorn Boxes</button>
+                    <button class="category-btn bg-gray-200 text-gray-700 px-3 py-1 rounded"
+                        data-category="Cutlery">Cutlery & Straws</button>
+                    <button class="category-btn bg-gray-200 text-gray-700 px-3 py-1 rounded" data-category="Lids">Cup
+                        Lids</button>
+                </div>
+            </div>
+
+            <!-- Product Grid -->
+            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+            <!-- Product Detail Modal -->
+            <div id="product-modal" class="fixed inset-0 bg-black/50 hidden z-[70] justify-center items-center p-4">
+                <div class="bg-white rounded-xl shadow-xl w-full max-w-3xl overflow-y-auto max-h-[90vh] p-6 relative">
+                    <button onclick="closeProductModal()"
+                        class="absolute top-4 right-4 text-gray-500 hover:text-red-500 text-2xl"><i
+                            class="fas fa-times"></i></button>
+                    <div id="modal-content" class="flex flex-col lg:flex-row gap-6"></div>
+                    <h3 class="text-xl font-bold mt-6 mb-3">Related Items</h3>
+                    <div id="related-items" class="grid grid-cols-2 sm:grid-cols-3 gap-4"></div>
+                </div>
+            </div>
+
+
+        </main>
+
+    </div>
+
+    <div id="cart-modal" class="fixed inset-0 bg-black/50 hidden z-[60] justify-end">
+        <div class="bg-white w-full md:w-[400px] h-full p-6 flex flex-col">
+            <div class="flex justify-between items-center mb-6 border-b pb-4">
+                <h2 class="text-2xl font-bold">Your Inquiry</h2>
+                <button onclick="toggleCart()" class="text-gray-500 hover:text-red-500"><i
+                        class="fas fa-times text-2xl"></i></button>
+            </div>
+
+            <div id="cart-items" class="flex-1 overflow-y-auto space-y-4">
+                <p class="text-gray-500 text-center mt-10">Your cart is empty.</p>
+            </div>
+
+            <div class="mt-6 pt-4 border-t">
+                <button onclick="checkoutWhatsApp()"
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-4 rounded-xl flex justify-center items-center gap-3 transition">
+                    <i class="fab fa-whatsapp text-2xl"></i> Send Order on WhatsApp
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. The Database of Products (Bulky Content)
+        let products = [];
+
+        // Fetch products from API on load
+        async function loadProducts() {
+            products = await fetchProducts();
+            renderProducts();
+        }
+
+        loadProducts();
+
+
+
+        let cart = [];
+
+        const grid = document.getElementById('product-grid');
+
+        // Render products function
+        function renderProducts(filterCategory = "All") {
+            grid.innerHTML = ""; // Clear previous products
+
+            const filteredProducts = filterCategory === "All"
+                ? products
+                : products.filter(p => p.category === filterCategory);
+
+            filteredProducts.forEach(p => {
+                grid.innerHTML += `
+            <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-2xl transition border border-gray-100 flex flex-col cursor-pointer" onclick="openProductModal(${p.id})">
+                <div class="h-48 overflow-hidden bg-gray-100">
+                    <img src="${p.img}" alt="${p.name}" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-5 flex-1 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-brandGold bg-brandNavy px-2 py-1 rounded uppercase">${p.category}</span>
+                        <h3 class="font-bold text-lg mt-2 text-brandNavy">${p.name}</h3>
+                        <p class="text-gray-500 text-sm mt-1">${p.desc}</p>
+                        <p class="text-gray-700 text-sm mt-1 font-semibold">Stock: ${p.stock}</p>
+                        <p class="text-gray-700 text-sm mt-1">Intl: ${p.intl_price} | Local: ${p.local_price}</p>
+                    </div>
+                    <button onclick="addToCart(${p.id})" class="mt-4 w-full border-2 border-brandNavy text-brandNavy font-bold py-2 rounded hover:bg-brandNavy hover:text-white transition flex justify-center items-center gap-2">
+                        <i class="fas fa-plus"></i> Add to Quote
+                    </button>
+                </div>
+            </div>
+        `;
+            });
+        }
+
+        // Product modal functionality
+        const productModal = document.getElementById('product-modal');
+        const modalContent = document.getElementById('modal-content');
+        const relatedItemsDiv = document.getElementById('related-items');
+
+        function openProductModal(id) {
+            const product = products.find(p => p.id === id);
+
+            modalContent.innerHTML = `
+        <div class="flex-1">
+            <img src="${product.img}" class="w-full h-64 object-cover rounded-lg">
+        </div>
+        <div class="flex-1 flex flex-col gap-2">
+            <h2 class="text-2xl font-bold">${product.name}</h2>
+            <p class="text-gray-500 mt-2">${product.desc}</p>
+            <p class="text-sm mt-1 font-medium">Size: ${product.size} | Stock: ${product.stock}</p>
+            <p class="text-sm mt-1 font-bold">Intl: ${product.intl_price} | Local: ${product.local_price}</p>
+            <button onclick="addToCart(${product.id})" class="mt-4 w-full border-2 border-brandNavy text-brandNavy font-bold py-2 rounded hover:bg-brandNavy hover:text-white transition flex justify-center items-center gap-2">
+                <i class="fas fa-plus"></i> Add to Quote
+            </button>
+        </div>
+    `;
+
+            // Related items (same category)
+            const related = products.filter(p => p.category === product.category && p.id !== product.id);
+            relatedItemsDiv.innerHTML = related.map(r => `
+        <div class="bg-gray-50 rounded-lg p-2 cursor-pointer hover:shadow-lg" onclick="openProductModal(${r.id})">
+            <img src="${r.img}" class="w-full h-24 object-cover rounded mb-2">
+            <p class="text-sm font-medium">${r.name}</p>
+        </div>
+    `).join('');
+
+            productModal.classList.remove('hidden');
+            productModal.classList.add('flex');
+        }
+
+        function closeProductModal() {
+            productModal.classList.add('hidden');
+            productModal.classList.remove('flex');
+        }
+
+        // Initial render
+        // Initial render
+        // renderProducts(); // Called by loadProducts now
+
+
+
+        // Initial render - show all products
+
+
+
+        // Category filtering
+        const categoryItems = document.querySelectorAll("#category-list li");
+        categoryItems.forEach(item => {
+            item.addEventListener("click", () => {
+                const category = item.getAttribute("data-category");
+                renderProducts(category);
+            });
+        });
+
+        // 3. Cart Logic
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            cart.push(product);
+            updateCartUI();
+            toggleCart(); // Open cart to show user
+        }
+
+        function updateCartUI() {
+            document.getElementById('cart-total').innerText = cart.length;
+            const cartList = document.getElementById('cart-items');
+
+            if (cart.length === 0) {
+                cartList.innerHTML = '<p class="text-gray-500 text-center mt-10">Your cart is empty.</p>';
+            } else {
+                cartList.innerHTML = cart.map((item, index) => `
+                    <div class="flex justify-between items-center bg-gray-50 p-3 rounded">
+                        <div class="flex items-center gap-3">
+                            <img src="${item.img}" class="w-10 h-10 object-cover rounded">
+                            <span class="font-bold text-sm">${item.name}</span>
+                        </div>
+                        <button onclick="removeItem(${index})" class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function removeItem(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cart-modal');
+            modal.classList.toggle('hidden');
+            modal.classList.toggle('flex');
+        }
+
+        // 4. WhatsApp Checkout
+        function checkoutWhatsApp() {
+            if (cart.length === 0) return alert("Please add items first!");
+
+            let message = "Hello QR Packages! I am interested in ordering:%0A%0A";
+            cart.forEach((item, i) => {
+                message += `${i + 1}. ${item.name}%0A`;
+            });
+            message += "%0APlease provide price quotation and export details.";
+
+            // Replace with Client's Number
+            window.open(`https://wa.me/923014163299?text=${message}`, '_blank');
+        }
+    </script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

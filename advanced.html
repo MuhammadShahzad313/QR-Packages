@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Packages | Premium Packaging Solutions</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brandNavy: '#0a192f',
+                        brandGold: '#FFC107',
+                        brandDark: '#020c1b',
+                    },
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Smooth Scrolling */
+        html { scroll-behavior: smooth; }
+        
+        /* Custom Animation Classes */
+        .hero-gradient {
+            background: linear-gradient(135deg, #0a192f 0%, #112240 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0a192f; }
+        ::-webkit-scrollbar-thumb { background: #FFC107; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans overflow-x-hidden">
+
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <img src="IMAGES\WhatsApp Image 2025-11-22 at 3.31.21 PM.jpeg" alt="Logo" class="h-12 w-auto hover:scale-105 transition-transform">
+                    <span class="font-bold text-2xl text-brandNavy tracking-tighter">QR<span class="text-brandGold">PACKAGES</span></span>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#home" class="text-brandNavy hover:text-brandGold font-medium transition-colors">Home</a>
+                    <a href="#products" class="text-brandNavy hover:text-brandGold font-medium transition-colors">Products</a>
+                    <a href="#about" class="text-brandNavy hover:text-brandGold font-medium transition-colors">About</a>
+                    <a href="#contact" class="px-6 py-2 bg-brandNavy text-brandGold font-bold rounded-full hover:bg-brandGold hover:text-brandNavy transition-all shadow-lg transform hover:-translate-y-1">Contact Us</a>
+                </div>
+
+                <div class="md:hidden flex items-center">
+                    <button class="text-brandNavy text-2xl"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="hero-gradient min-h-screen flex items-center pt-20 relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-full bg-brandGold/10 skew-x-12 transform origin-top-right"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="gsap-hero-text">
+                    <span class="text-brandGold font-bold tracking-widest uppercase text-sm mb-2 block">Premium Packaging Solutions</span>
+                    <h1 class="text-5xl md:text-7xl font-extrabold text-white leading-tight mb-6">
+                        Elevate Your <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brandGold to-yellow-300">Brand Identity</span>
+                    </h1>
+                    <p class="text-gray-300 text-lg mb-8 max-w-lg leading-relaxed">
+                        We craft premium disposable cups and custom packaging that speaks volumes about your quality. Durable, stylish, and eco-friendly.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#products" class="px-8 py-4 bg-brandGold text-brandNavy font-bold rounded-lg shadow-xl hover:bg-white transition-all transform hover:-translate-y-1 flex items-center gap-2">
+                            View Products <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="#contact" class="px-8 py-4 border-2 border-white text-white font-bold rounded-lg hover:bg-white hover:text-brandNavy transition-all">
+                            Get Quote
+                        </a>
+                    </div>
+                </div>
+
+                <div class="gsap-hero-img relative">
+                    <div class="relative z-10 transform hover:scale-105 transition-transform duration-500">
+                        <img src="IMG-20251121-WA0031.jpg" alt="Premium Cups Stack" class="rounded-2xl shadow-2xl border-4 border-white/10 w-full object-cover h-[500px]">
+                    </div>
+                    <div class="absolute -bottom-10 -left-10 bg-white p-6 rounded-xl shadow-xl z-20 animate-bounce hidden md:block">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-green-100 p-3 rounded-full text-green-600 text-2xl">
+                                <i class="fas fa-leaf"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-500 font-semibold">Eco Friendly</p>
+                                <p class="text-brandNavy font-bold text-lg">100% Safe</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="products" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-brandNavy mb-4">Our Best Sellers</h2>
+                <div class="w-24 h-1 bg-brandGold mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                
+                <div class="group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white border border-gray-100">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="IMG-20251121-WA0033.jpg" alt="Coffee Cup" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 bg-brandNavy text-white text-xs font-bold px-3 py-1 rounded-full">Hot Seller</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-brandNavy mb-2">Ripple Wall Coffee Cup</h3>
+                        <p class="text-gray-500 text-sm mb-4">Double-layer insulation perfect for hot beverages. Available in 8oz, 12oz, 16oz.</p>
+                        <button class="w-full py-3 border-2 border-brandNavy text-brandNavy font-bold rounded-lg group-hover:bg-brandNavy group-hover:text-white transition-all">Inquire Now</button>
+                    </div>
+                </div>
+
+                <div class="group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white border border-gray-100">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="IMG-20251121-WA0030.jpg" alt="Ice Cream Cup" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-brandNavy mb-2">Premium Ice Cream Cups</h3>
+                        <p class="text-gray-500 text-sm mb-4">Vibrant printing with leak-proof coating. Perfect for frozen desserts.</p>
+                        <button class="w-full py-3 border-2 border-brandNavy text-brandNavy font-bold rounded-lg group-hover:bg-brandNavy group-hover:text-white transition-all">Inquire Now</button>
+                    </div>
+                </div>
+
+                <div class="group rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 bg-white border border-gray-100">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="IMG-20251121-WA0031.jpg" alt="Bulk Packaging" class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-brandNavy mb-2">Wholesale Bundles</h3>
+                        <p class="text-gray-500 text-sm mb-4">Cost-effective bulk solutions for cafes, restaurants, and corporate events.</p>
+                        <button class="w-full py-3 border-2 border-brandNavy text-brandNavy font-bold rounded-lg group-hover:bg-brandNavy group-hover:text-white transition-all">Inquire Now</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col md:flex-row">
+                
+                <div class="md:w-2/5 bg-brandNavy p-12 text-white flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-bold mb-6">Get in Touch</h3>
+                        <p class="text-gray-300 mb-10">Ready to upgrade your packaging? Contact Mr. Rashid Ijaz Khan today.</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-brandGold flex items-center justify-center text-brandNavy">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">Call Us</p>
+                                    <p class="font-bold text-lg">0301-4163299</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-brandGold flex items-center justify-center text-brandNavy">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">Email Us</p>
+                                    <p class="font-bold text-lg">rashid82766@gmail.com</p>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-4">
+                                <div class="w-10 h-10 rounded-full bg-brandGold flex items-center justify-center text-brandNavy">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-400">Visit Us</p>
+                                    <p class="font-bold">Al Hamra Town, Raiwind Road, LHR</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-12">
+                        <p class="text-sm text-gray-400">Follow us</p>
+                        <div class="flex gap-4 mt-2">
+                            <a href="#" class="w-8 h-8 rounded bg-white/10 flex items-center justify-center hover:bg-brandGold hover:text-brandNavy transition-all"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" class="w-8 h-8 rounded bg-white/10 flex items-center justify-center hover:bg-brandGold hover:text-brandNavy transition-all"><i class="fab fa-instagram"></i></a>
+                            <a href="#" class="w-8 h-8 rounded bg-white/10 flex items-center justify-center hover:bg-brandGold hover:text-brandNavy transition-all"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:w-3/5 p-12">
+                    <h3 class="text-2xl font-bold text-brandNavy mb-6">Send us a Message</h3>
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Your Name</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brandGold focus:ring-0 transition-all" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brandGold focus:ring-0 transition-all" placeholder="0300-1234567">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                            <input type="email" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brandGold focus:ring-0 transition-all" placeholder="john@example.com">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Message</label>
+                            <textarea rows="4" class="w-full px-4 py-3 rounded-lg bg-gray-50 border border-gray-200 focus:border-brandGold focus:ring-0 transition-all" placeholder="I need a quote for..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-brandNavy text-white font-bold py-4 rounded-lg shadow-lg hover:bg-brandGold hover:text-brandNavy transition-all transform active:scale-95">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-brandDark text-white py-12 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <img src="Untitled design (2).png" alt="Logo" class="h-16 w-auto mx-auto mb-6 opacity-80 grayscale hover:grayscale-0 transition-all">
+            <p class="text-gray-500 mb-4">&copy; 2025 QR Packages. All Rights Reserved.</p>
+            <p class="text-sm text-gray-600">Designed by Your AI Partner</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script>
+        // Register ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Hero Animation (Fade in text)
+        gsap.from(".gsap-hero-text", {
+            duration: 1.2,
+            y: 50,
+            opacity: 0,
+            ease: "power4.out",
+            delay: 0.2
+        });
+
+        // 2. Hero Image Animation (Slide in)
+        gsap.from(".gsap-hero-img", {
+            duration: 1.5,
+            x: 50,
+            opacity: 0,
+            ease: "power4.out",
+            delay: 0.5
+        });
+
+        // 3. Product Cards Stagger Animation
+        gsap.from(".group", {
+            scrollTrigger: {
+                trigger: "#products",
+                start: "top 70%", // Starts when top of section hits 70% of viewport
+            },
+            duration: 0.8,
+            y: 100,
+            opacity: 0,
+            stagger: 0.2, // Delays each card slightly for a cool effect
+            ease: "power2.out"
+        });
+
+        // 4. Navbar Glass Effect on Scroll
+        window.addEventListener("scroll", () => {
+            const nav = document.getElementById("navbar");
+            if (window.scrollY > 50) {
+                nav.classList.add("shadow-md", "py-2");
+                nav.classList.remove("py-4");
+            } else {
+                nav.classList.remove("shadow-md", "py-2");
+                nav.classList.add("py-4");
+            }
+        });
+    </script>
+
+</body>
+</html>
