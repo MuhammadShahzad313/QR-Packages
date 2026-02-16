@@ -1,5 +1,5 @@
 const stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx'); // Replace with your Publishable Key
-const API_URL = 'http://localhost:3000/api';
+const API_URL = '/api';
 
 // --- AUTHENTICATION ---
 
