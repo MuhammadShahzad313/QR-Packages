@@ -90,8 +90,8 @@ app.use((req, res, next) => {
     next();
 });
 
-// Health Check (Important for Railway)
-app.get('/', (req, res) => {
+// Health Check
+app.get('/api/health', (req, res) => {
     res.send('Backend is running!');
 });
 
