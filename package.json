@@ -2,7 +2,7 @@
   "name": "qr-packages-dynamic",
   "version": "1.0.0",
   "description": "Dynamic website for QR Packages",
-  "main": "server.js",
+  "main": "api/index.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js"
