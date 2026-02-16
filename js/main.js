@@ -1,4 +1,4 @@
-const stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx'); // Replace with your Publishable Key
+// Stripe Removed
 const API_URL = '/api';
 
 // --- AUTHENTICATION ---
@@ -20,7 +20,7 @@ async function registerUser(event) {
             alert('Registration successful! Please login.');
             window.location.href = 'login.html';
         } else {
-            alert(data.error);
+            alert(`Error: ${data.error}`);
         }
     } catch (error) {
         console.error('Error:', error);
@@ -45,7 +45,7 @@ async function loginUser(event) {
             localStorage.setItem('user', JSON.stringify(data.user)); // Store user session
             window.location.href = 'index.html';
         } else {
-            alert(data.error);
+            alert(`Error: ${data.error}`);
         }
     } catch (error) {
         console.error('Error:', error);
@@ -209,28 +209,16 @@ function toggleCart() {
     }
 }
 
-// WhatsApp Checkout (Legacy) -- Redirects to checkout page now
-function checkoutWhatsApp() {
-    if (cart.length === 0) return alert("Please add items first!");
-    window.location.href = 'checkout.html';
-}
+// WhatsApp checkout removed
+
 
 
 // --- CHECKOUT PAGE LOGIC ---
 
-let stripeElements;
-let cardElement;
-
 function initCheckout() {
     renderCheckoutItems();
     updateShipping();
-
-    // Initialize Stripe logic only if on checkout page and Stripe is loaded
-    if (document.getElementById('card-element') && typeof stripe !== 'undefined') {
-        stripeElements = stripe.elements();
-        cardElement = stripeElements.create('card');
-        cardElement.mount('#card-element');
-    }
+    togglePaymentGroups(); // Initialize instructions
 }
 
 function renderCheckoutItems() {
@@ -297,15 +285,18 @@ function updateOrderTotal() {
 
 function togglePaymentGroups() {
     const method = document.querySelector('input[name="payment-method"]:checked').value;
-    const localGroup = document.getElementById('payment-local');
-    const stripeGroup = document.getElementById('payment-stripe');
+    const instructionTitle = document.getElementById('instruction-title');
+    const instructionText = document.getElementById('instruction-text');
 
     if (method === 'cod') {
-        localGroup.classList.remove('hidden');
-        stripeGroup.classList.add('hidden');
-    } else {
-        localGroup.classList.add('hidden');
-        stripeGroup.classList.remove('hidden');
+        instructionTitle.innerText = "Cash on Delivery";
+        instructionText.innerText = "You will pay for this order when it arrives at your doorstep. Please ensure you have the exact amount ready.";
+    } else if (method === 'easypaisa') {
+        instructionTitle.innerText = "EasyPaisa Transfer";
+        instructionText.innerHTML = "Please send the total amount to <strong>0348-2466637</strong> via EasyPaisa.<br>After sending, your order will be verified manually.";
+    } else if (method === 'jazzcash') {
+        instructionTitle.innerText = "JazzCash Transfer";
+        instructionText.innerHTML = "Please send the total amount to <strong>0348-2466637</strong> via JazzCash.<br>After sending, your order will be verified manually.";
     }
 }
 
@@ -324,35 +315,14 @@ async function handleCheckout(event) {
             address: document.getElementById('address').value,
             city: document.getElementById('city').value,
             country: document.getElementById('country').value,
+            phone: document.getElementById('phone') ? document.getElementById('phone').value : ''
         },
         total: parseFloat(document.getElementById('total-price').innerText.replace('$', '')),
         method: method
     };
 
-    if (method === 'stripe') {
-        const response = await fetch(`${API_URL}/create-payment-intent`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(orderData)
-        });
-        const { clientSecret } = await response.json();
-
-        const result = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: { card: cardElement }
-        });
-
-        if (result.error) {
-            document.getElementById('card-errors').innerText = result.error.message;
-            submitBtn.disabled = false;
-            submitBtn.innerText = "Confirm Order";
-        } else {
-            if (result.paymentIntent.status === 'succeeded') {
-                completeOrder(orderData);
-            }
-        }
-    } else {
-        completeOrder(orderData);
-    }
+    // Submitting directly for all methods
+    completeOrder(orderData);
 }
 
 async function completeOrder(orderData) {

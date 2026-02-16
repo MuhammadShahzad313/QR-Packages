@@ -18,7 +18,7 @@
             }
         }
     </script>
-    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Stripe Removed -->
 </head>
 
 <body class="bg-gray-50 text-brandNavy font-sans flex flex-col min-h-screen">
@@ -104,8 +104,7 @@
                                 <label class="block text-gray-700 font-bold mb-1">Country</label>
                                 <select id="country" onchange="updateShipping()"
                                     class="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-brandGold outline-none">
-                                    <option value="PK">Pakistan</option>
-                                    <option value="INTL">International (Other)</option>
+                                    <option value="PK" selected>Pakistan</option>
                                 </select>
                             </div>
                         </div>
@@ -114,43 +113,52 @@
                     <!-- 2. Payment Method -->
                     <div class="bg-white p-6 rounded-xl shadow-md">
                         <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
-                            <i class="fas fa-credit-card text-brandGold"></i> Payment Method
+                            <i class="fas fa-wallet text-brandGold"></i> Payment Method
                         </h2>
 
-                        <div class="flex gap-4 mb-6">
+                        <div class="space-y-3 mb-6">
+                            <!-- COD -->
                             <label
-                                class="flex items-center gap-2 cursor-pointer border p-4 rounded-lg flex-1 hover:border-brandGold transition">
+                                class="flex items-center gap-3 cursor-pointer border p-4 rounded-lg hover:border-brandGold transition">
                                 <input type="radio" name="payment-method" value="cod" checked
                                     onchange="togglePaymentGroups()">
-                                <i class="fas fa-money-bill-wave text-green-500"></i> Local / COD
+                                <div class="flex items-center gap-2">
+                                    <i class="fas fa-truck text-green-600 text-xl"></i>
+                                    <span class="font-bold">Cash on Delivery (COD)</span>
+                                </div>
                             </label>
+
+                            <!-- EasyPaisa -->
                             <label
-                                class="flex items-center gap-2 cursor-pointer border p-4 rounded-lg flex-1 hover:border-brandGold transition">
-                                <input type="radio" name="payment-method" value="stripe"
+                                class="flex items-center gap-3 cursor-pointer border p-4 rounded-lg hover:border-brandGold transition">
+                                <input type="radio" name="payment-method" value="easypaisa"
                                     onchange="togglePaymentGroups()">
-                                <i class="fab fa-cc-stripe text-indigo-500"></i> Credit Card (Stripe)
+                                <div class="flex items-center gap-2">
+                                    <img src="https://play-lh.googleusercontent.com/6_Qan3RBgpJUj0C29KyXU5g5H3Xq8cO4d-Kz8k_y8Yj8A_b8j8A_b8j8A_b8j8w=w240-h480-rw"
+                                        alt="EasyPaisa" class="w-8 h-8 rounded-full">
+                                    <span class="font-bold">EasyPaisa</span>
+                                </div>
+                            </label>
+
+                            <!-- JazzCash -->
+                            <label
+                                class="flex items-center gap-3 cursor-pointer border p-4 rounded-lg hover:border-brandGold transition">
+                                <input type="radio" name="payment-method" value="jazzcash"
+                                    onchange="togglePaymentGroups()">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://play-lh.googleusercontent.com/L-c7b4-c7b4-c7b4-c7b4=w240-h480-rw"
+                                        alt="JazzCash" class="w-8 h-8 rounded-full border">
+                                    <!-- Placeholder or FontAwesome fallback if image fails -->
+                                    <span class="font-bold">JazzCash</span>
+                                </div>
                             </label>
                         </div>
 
-                        <!-- Local Payment Info -->
-                        <div id="payment-local" class="p-4 bg-gray-50 rounded border border-gray-200">
-                            <p class="font-bold text-gray-700 mb-2">Instructions for Local Orders (Pakistan):</p>
-                            <ul class="list-disc pl-5 text-sm text-gray-600 space-y-1">
-                                <li><strong>Cash on Delivery (COD)</strong>: Pay when you receive the goods.</li>
-                                <li><strong>Bank Transfer</strong>: Habib Bank Limited (HBL) - 1234 5678 9012 3456</li>
-                            </ul>
-                            <p class="text-xs text-gray-500 mt-2">Order will be processed once verified.</p>
+                        <!-- Payment Instructions -->
+                        <div id="payment-instructions" class="p-5 bg-blue-50 rounded-xl border border-blue-100">
+                            <h3 id="instruction-title" class="font-bold text-brandNavy mb-2 text-lg">Instructions</h3>
+                            <p id="instruction-text" class="text-gray-700 leading-relaxed"></p>
                         </div>
-
-                        <!-- Stripe Payment Info -->
-                        <div id="payment-stripe" class="hidden p-4 bg-gray-50 rounded border border-gray-200">
-                            <label class="block text-gray-700 font-bold mb-2">Card Details</label>
-                            <div id="card-element" class="p-3 border rounded bg-white">
-                                <!-- Stripe Element injected here -->
-                            </div>
-                            <div id="card-errors" role="alert" class="text-red-500 text-sm mt-2"></div>
-                        </div>
-
                     </div>
 
                     <button type="submit" id="submit-btn"

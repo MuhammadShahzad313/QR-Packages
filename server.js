@@ -5,10 +5,10 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const path = require('path');
 const fs = require('fs');
-const Stripe = require('stripe');
+// Stripe removed
 require('dotenv').config();
 
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY); // Stripe Key from .env
+// Stripe initialization removed
 
 
 const app = express();
@@ -20,49 +20,75 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname)); // Serve static files from current directory
 
 // Database Connection
+// Database Connection
 let db;
-const dbConfig = {
-    host: process.env.DB_HOST || process.env.MYSQLHOST,
-    user: process.env.DB_USER || process.env.MYSQLUSER,
-    password: process.env.DB_PASSWORD || process.env.MYSQLPASSWORD,
-    database: process.env.DB_NAME || process.env.MYSQLDATABASE,
-    port: process.env.DB_PORT || process.env.MYSQLPORT || 3306,
-    multipleStatements: true
-};
 
-// Prefer efficient object config if host is available, otherwise try URL
-if (dbConfig.host) {
+function handleDisconnect() {
+    const dbConfig = process.env.DATABASE_URL || {
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env.DB_NAME,
+        port: process.env.DB_PORT || 3306,
+        multipleStatements: true
+    };
+
+    console.log('Attempting to connect to database...');
+    // Log host only to avoid leaking passwords in logs
+    if (typeof dbConfig === 'string') {
+        console.log('Using Connection String (Hidden for security)');
+    } else {
+        console.log('Using Config Object:', { ...dbConfig, password: '****' });
+    }
+
     db = mysql.createConnection(dbConfig);
-} else if (process.env.MYSQL_URL || process.env.DATABASE_URL) {
-    db = mysql.createConnection(process.env.MYSQL_URL || process.env.DATABASE_URL);
-} else {
-    console.error("No database configuration found!");
-}
 
-if (db) {
     db.connect(err => {
         if (err) {
-            console.error('Database connection failed:', err);
+            console.error('❌ Database connection failed:', err.message);
+            // Optional: setTimeout(handleDisconnect, 2000); // Auto-reconnect
         } else {
-            console.log('Connected to MySQL database');
+            console.log('✅ Connected to MySQL database');
+            initializeSchema();
+        }
+    });
 
-            // Auto-run schema
-            const schemaPath = path.join(__dirname, 'schema.sql');
-            if (fs.existsSync(schemaPath)) {
-                let schemaSql = fs.readFileSync(schemaPath, 'utf8');
-                // Remove CREATE DATABASE and USE commands for production compatibility
-                schemaSql = schemaSql.replace(/CREATE DATABASE.*?;/g, '').replace(/USE.*?;/g, '');
-
-                db.query(schemaSql, (err, result) => {
-                    if (err) console.error('Schema initialization error (ignored):', err.message);
-                    else console.log('Database schema ensured.');
-                });
-            }
+    db.on('error', err => {
+        console.error('Database error:', err);
+        if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+            handleDisconnect();
+        } else {
+            throw err;
         }
     });
 }
 
+function initializeSchema() {
+    // Auto-run schema
+    const schemaPath = path.join(__dirname, 'schema.sql');
+    if (fs.existsSync(schemaPath)) {
+        let schemaSql = fs.readFileSync(schemaPath, 'utf8');
+        // Remove CREATE DATABASE and USE commands for production compatibility
+        schemaSql = schemaSql.replace(/CREATE DATABASE.*?;/g, '').replace(/USE.*?;/g, '');
+
+        db.query(schemaSql, (err, result) => {
+            if (err) console.error('Schema initialization error (ignored):', err.message);
+            else console.log('Database schema ensured.');
+        });
+    }
+}
+
+handleDisconnect();
+
+
 // --- API Endpoints ---
+app.use((req, res, next) => {
+    if (!db || db.state === 'disconnected') {
+        console.error('Request failed: Database not connected');
+        return res.status(503).json({ error: 'Service Unavailable: Database not connected' });
+    }
+    next();
+});
 
 // Health Check (Important for Railway)
 app.get('/', (req, res) => {
@@ -123,19 +149,7 @@ app.get('/api/products', (req, res) => {
     });
 });
 
-// 4. Create Payment Intent (Stripe)
-app.post('/api/create-payment-intent', async (req, res) => {
-    const { total } = req.body;
-    try {
-        const paymentIntent = await stripe.paymentIntents.create({
-            amount: Math.round(total * 100), // Stripe expects cents
-            currency: 'usd',
-        });
-        res.send({ clientSecret: paymentIntent.client_secret });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
+// Stripe Payment Intent Endpoint Removed
 
 // 5. Create Order
 app.post('/api/orders', (req, res) => {
@@ -160,6 +174,10 @@ app.post('/api/orders', (req, res) => {
 });
 
 // Start Server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+module.exports = app;
