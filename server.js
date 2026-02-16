@@ -22,44 +22,52 @@ app.use(express.static(__dirname)); // Serve static files from current directory
 // Database Connection
 let db;
 const dbConfig = {
+    host: process.env.DB_HOST || process.env.MYSQLHOST,
+    user: process.env.DB_USER || process.env.MYSQLUSER,
+    password: process.env.DB_PASSWORD || process.env.MYSQLPASSWORD,
+    database: process.env.DB_NAME || process.env.MYSQLDATABASE,
+    port: process.env.DB_PORT || process.env.MYSQLPORT || 3306,
     multipleStatements: true
 };
 
-if (process.env.MYSQL_URL || process.env.DATABASE_URL) {
+// Prefer efficient object config if host is available, otherwise try URL
+if (dbConfig.host) {
+    db = mysql.createConnection(dbConfig);
+} else if (process.env.MYSQL_URL || process.env.DATABASE_URL) {
     db = mysql.createConnection(process.env.MYSQL_URL || process.env.DATABASE_URL);
 } else {
-    db = mysql.createConnection({
-        host: process.env.DB_HOST || process.env.MYSQLHOST,
-        user: process.env.DB_USER || process.env.MYSQLUSER,
-        password: process.env.DB_PASSWORD || process.env.MYSQLPASSWORD,
-        database: process.env.DB_NAME || process.env.MYSQLDATABASE,
-        port: process.env.DB_PORT || process.env.MYSQLPORT || 3306,
-        multipleStatements: true
+    console.error("No database configuration found!");
+}
+
+if (db) {
+    db.connect(err => {
+        if (err) {
+            console.error('Database connection failed:', err);
+        } else {
+            console.log('Connected to MySQL database');
+
+            // Auto-run schema
+            const schemaPath = path.join(__dirname, 'schema.sql');
+            if (fs.existsSync(schemaPath)) {
+                let schemaSql = fs.readFileSync(schemaPath, 'utf8');
+                // Remove CREATE DATABASE and USE commands for production compatibility
+                schemaSql = schemaSql.replace(/CREATE DATABASE.*?;/g, '').replace(/USE.*?;/g, '');
+
+                db.query(schemaSql, (err, result) => {
+                    if (err) console.error('Schema initialization error (ignored):', err.message);
+                    else console.log('Database schema ensured.');
+                });
+            }
+        }
     });
 }
 
-db.connect(err => {
-    if (err) {
-        console.error('Database connection failed:', err);
-    } else {
-        console.log('Connected to MySQL database');
-
-        // Auto-run schema
-        const schemaPath = path.join(__dirname, 'schema.sql');
-        if (fs.existsSync(schemaPath)) {
-            let schemaSql = fs.readFileSync(schemaPath, 'utf8');
-            // Remove CREATE DATABASE and USE commands for production compatibility
-            schemaSql = schemaSql.replace(/CREATE DATABASE.*?;/g, '').replace(/USE.*?;/g, '');
-
-            db.query(schemaSql, (err, result) => {
-                if (err) console.error('Schema initialization error (ignored):', err.message);
-                else console.log('Database schema ensured.');
-            });
-        }
-    }
-});
-
 // --- API Endpoints ---
+
+// Health Check (Important for Railway)
+app.get('/', (req, res) => {
+    res.send('Backend is running!');
+});
 
 // 1. Register User
 app.post('/api/register', async (req, res) => {
@@ -152,6 +160,6 @@ app.post('/api/orders', (req, res) => {
 });
 
 // Start Server
-app.listen(PORT, () => {
-    console.log(`Server running on http://localhost:${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running on http://0.0.0.0:${PORT}`);
 });
