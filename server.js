@@ -4,6 +4,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const path = require('path');
+const fs = require('fs');
 const Stripe = require('stripe');
 require('dotenv').config();
 
@@ -19,18 +20,42 @@ app.use(bodyParser.json());
 app.use(express.static(__dirname)); // Serve static files from current directory
 
 // Database Connection
-const db = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
-});
+let db;
+const dbConfig = {
+    multipleStatements: true
+};
+
+if (process.env.MYSQL_URL || process.env.DATABASE_URL) {
+    db = mysql.createConnection(process.env.MYSQL_URL || process.env.DATABASE_URL);
+} else {
+    db = mysql.createConnection({
+        host: process.env.DB_HOST || process.env.MYSQLHOST,
+        user: process.env.DB_USER || process.env.MYSQLUSER,
+        password: process.env.DB_PASSWORD || process.env.MYSQLPASSWORD,
+        database: process.env.DB_NAME || process.env.MYSQLDATABASE,
+        port: process.env.DB_PORT || process.env.MYSQLPORT || 3306,
+        multipleStatements: true
+    });
+}
 
 db.connect(err => {
     if (err) {
         console.error('Database connection failed:', err);
     } else {
         console.log('Connected to MySQL database');
+
+        // Auto-run schema
+        const schemaPath = path.join(__dirname, 'schema.sql');
+        if (fs.existsSync(schemaPath)) {
+            let schemaSql = fs.readFileSync(schemaPath, 'utf8');
+            // Remove CREATE DATABASE and USE commands for production compatibility
+            schemaSql = schemaSql.replace(/CREATE DATABASE.*?;/g, '').replace(/USE.*?;/g, '');
+
+            db.query(schemaSql, (err, result) => {
+                if (err) console.error('Schema initialization error (ignored):', err.message);
+                else console.log('Database schema ensured.');
+            });
+        }
     }
 });
 
